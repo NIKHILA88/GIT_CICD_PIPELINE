@@ -6,3 +6,13 @@ go into the project you would like the server to be able to read/write to and al
 Scroll down to "Deploy Keys" and paste the .pub key into that box and call it "gcp-ds-deploy-key" or something like that and check the box for write capability as well
  
 You should now be able to go back to the deployment and be able to git clone "ssh link of the repo" and pull it in there
+
+after that execute the below commands on server
+
+git remote -v
+ git status
+  git add -A .
+  git commit -m "Adding apps"
+   git push origin master
+   git push origin master --force
+   
