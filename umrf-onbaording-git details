@@ -1,0 +1,291 @@
+ITCCWebsite
+
+Learning
+We will also be using git at the command line, so go through this tutorial on the command line interface
+and use this article as a reference for the git commands.
+Please go through these to learn or refresh your knowledge before contributing to this repository.
+
+Accessing the Sandbox and Transferring Files
+
+Acessing the Sandbox
+
+Open the PUTTY application located on your VDI desktop
+Type your host name (find your username in the Users by Sandbox section) in the Host Name (or IP address) field
+Click Open
+Enter your username and password
+
+Note: Your account will be on the server associated with the team you are on. Your username will simply be your first name (in lower case) according to the list below and the default password is sandbox.
+Once you login for the first time, you should change your password by typing passwd and following the prompts.
+
+ben: micaela, harsh, lorenzo
+gabriel: daniel, maria, hunter
+nathanael: samantha, fesobi, shima
+jacob: ariel, taylor, adam, jenee
+shash: tristan, nabat, adam
+
+
+Putting and Getting Files
+
+PSFTP
+To open a connection the cloud server:
+
+Open the PSFTP application located on your VDI desktop
+Type open [your-team's-sandbox]
+
+Enter your username and password
+
+Once you have an open connection to the cloud server, you can move files to/from the server.
+Moving files from VDI to server:
+
+Add you files to the desktop folder in your VDI
+For each file you want to move to the host, type put [your file name]
+
+Files will be added to your home folder on the host (this is the first folder you are in when you log in or you can use cd ~)
+To move the files to another folder use mv [file name] [folder to move to]. You can also use this command to change the name of a file.
+
+Moving files from server to VDI:
+
+For each file you want to get from the host, type get [your file path including file name]
+
+Locate your file on the desktop
+
+
+Copy and Paste
+
+Open the file you want to transfer in notepad++
+In the sandbox, open a new file using vim -- vim [file name]
+
+Hit lowercase i to enter insert mode
+Go back to your CSV file in notepad++ and copy the text (Ctrl+A then Ctrl+C)
+In the sandbox, hit the right click button to paste the text
+Hit esc to exit insert mode
+Type :wq to write and quit the file and hit enter
+
+
+
+Cloning the Repository
+
+Change into the folder where you want the repo to live (e.g. the suggested folder is your home folder -- cd ~).
+Clone the umrf-onboarding repository using git clone https://gitlab.prod.fedex.com/APP3530768/umrf-onboarding.git.
+Clone the test-deployment repository using git clone https://gitlab.prod.fedex.com/APP3530768/test-deployment-server.git.
+
+
+Contributing
+
+General Procedure
+
+Command Line
+
+Before you start a project, make sure you are on master. Use git checkout master to change to the master branch before starting a new project.
+If instead you are continuing a project, make sure you on the desired branch by using git checkout [branchname].
+If you are starting a new project, use git pull origin to get an up-to-date version of the code, then create a new branch using git checkout -b [branchname].
+If you are continuing a project, use git pull origin [branchname] to pull the latest version of the branch to the local copy. Then
+
+Note: The branch name should include information on what you are working on like ratc-conf-creation or wgrt-conf-update.
+
+You can now make changes to files and git will track the changes. At any point, you can use git status to see what files you have changed
+Each time you make a change, create a commit:
+
+Stage the file or folder using git add --all [FILE OR FOLDER]
+
+Complete commit using git commit -m "COMMENT TO DESCRIBE THE INTENTION OF THE COMMIT"
+
+Push the changes from your local clone to the origin (what you see online) using git push origin NAME-OF-BRANCH
+
+If you mistakely commit something, you can revert (undo) the last commit using git revert HEAD
+
+
+
+To merge your code, get online and submit a merge request from your branch to master and ask one of the shift leads to review and approve it
+(see the Web Interface section)
+Once your merge request is approved, create a deploy task for the ITCC team and include the link to your app's folder
+You can now delete your local branch -- git checkout master; git branch -D [your branch name]
+
+
+Important: DO NOT make changes to the master branch. To check this, type git branch and make sure master does not have a star by it.
+
+Web Interface
+
+Create a new branch (or switch to an existing branch)
+
+Click on Branches under Repository in the menu on the left
+Select your branch from the list or click the green  "New Branch" button at the top right of the page
+If you are creating a new branch, enter a branch name and click Create branch
+
+
+
+Note: The branch name should include app name and eai number and may also include description of work oadr_133 or oadr_133_updatehostlist.
+
+Commit your changes (upload or change your files)
+Submit a merge request
+
+Click Merge Requests in the menu on the left
+Click the green "New Merge Request" button at the top right of the page
+Select your branch from the drop-down list in the Source Branch box
+Click Compare branches and continue
+Make sure there is no WIP: in the title
+Check the box for "Remove source branch when merge request is accepted."
+Click submit merge request
+Have a shift lead review and approve the request
+
+
+
+Important: UMRF team members are not able to commit directly to the master branch. It will look like it worked, but your change will be added to
+a new branch called patch-#. If you do not use the expected procedure, your changes may get lost.
+
+Adding a New App Folder
+Note: These directions assume that you are already on step 3 of the general procedure and are ready to make changes to the repo.
+
+Make sure you are in the umrf-onboarding directory -- cd ~/umrf-onboarding
+
+Create the directory for your app -- mkdir fedex_app_[app name]_[eai] (This should be the same as the index name.)
+Change into the directory for your app -- cd fedex_app_[app name]_[eai]
+
+Create the 4 base directories (conf, docs, screenshots, samplelogs) -- mkdir -p {conf,docs,screenshots,samplelogs}
+
+Add a .gitkeep file to all folders so that they will push to the repo even if they are empty (git will not push empty folders) --
+for d in *; do touch "$d"/.gitkeep; done
+
+Follow steps 4-7 of the general procedure to commit and push your changes and submit a merge request
+
+
+Adding Related Documentation
+Note: These directions assume that you are already on step 3 of the general procedure and are ready to make changes to the repo.
+
+Use the directions given in the Generate MD Tables README to add tables for the dev/test and prod hosts and sources tabs of the questionnaire
+in the Test and Prod folders, respectively
+Also use those directions to generate a template questionnaire table in the Docs folder
+Follow step 4 of the general procedure to commit and push your changes
+Go to the home page of the repo online and switch to your branch (choose it in the drop-down list)
+Navigate to the Docs folder for your app and upload any related documents like the sample logs and screenshots of the events parsing correctly in the sandbox
+Finish out steps 5-7 of the general procedure
+
+
+
+Adding New conf Files
+Note: These directions assume that you are already on step 3 of the general procedure and are ready to make changes to the repo.
+
+Change into the Test folder to develop dev/test conf files -- (if you are in your app folder already) cd Test
+
+Upload conf files using the directions in the Putting and Getting Files section and move them to the proper folder
+or create new ones using a command line editor like nano (nano [file name] to create and edit a file)
+Test your .conf files using validate_confs.py (see conf_validator/README.md)
+
+Note: If you are in one of the folders inside the folder for your app, you can run the conf validator where you are using
+python ../../conf_validator/validate_confs.py inputs.conf props.conf > ../docs/validation.log
+or, even easier, simply move to the conf_validator and run the validate_confs.sh script with the following command:
+./validate_confs.sh fedex_app_test_0000 passing the app index as the sole argument to the script
+Important: The conf validator program only checks for syntax errors. It does not check that the props will parse correctly, so you must still validate the props
+in the sandbox and upload screenshots showing the events parsing correctly to the docs folder.
+
+Refine your conf files until you don't get any errors
+Change back to the base folder of the repo -- cd ../../
+
+Follow step 4 of the general procedure to commit and push your changes
+
+Note: If the dev/test and prod configurations are different, you will need to repeat this process for the prod files in the Prod folder.
+
+Go to the home page of the repo online and switch to your branch (choose it in the drop-down list)
+Navigate to the docs directory and upload the testhosts.txt file that just contains a list of all of the test hosts for this app (create this using notepad++)
+Do the same thing for the prod hosts (prodhosts.txt)
+Finish out steps 5-7 of the general procedure
+
+
+
+Checklist for App Migration
+If you are migrating an app, use the directions in previous sections to make sure that the following things are complete:
+
+Created branch following naming convention
+Created app folder with the same name as the index
+Created conf, docs, screenshots, and samplelogs directories within the app folder
+Updated the conf folder to have:
+
+inputs.conf
+props.conf
+
+
+Updated the docs folder to have:
+
+ls.txt
+prodhosts.txt (just a list of Prod hosts)
+prod.md
+questionnaire.md
+testhosts.txt (just a list of Dev/Test hosts)
+test.md (see Adding Related Documentation
+
+validation.log
+
+
+Updated the samplelogs folder to have:
+
+sample logs
+
+
+Updated the screenshots folder to have:
+
+Sandbox screenshots showing each sourcetype parsing correctly
+
+
+Double-check the EAI/App name in SEAL
+Create merge request
+Have merge request approved
+Add link to repo in our tasks (especially questionnaire and create conf)
+Make sure a deploy task is open, if applicable
+
+
+Quick Reference
+
+Command Line Navigation
+
+Change directories -- cd [directory name]
+
+List directory contents -- ls
+
+Make a directory -- mkdir [directory name]
+
+Edit a file using nano (editor commands are shown at the bottom) -- nano [file name]
+
+Edit a file using vim (this is a faster editor, but it takes a little more to learn) -- vim [file name]
+
+Use the up arrow to scroll through previous commands
+Use the tab key to autocomplete file names and some commands
+Hit the tab key twice in a row to show autocomplete options
+Set the backspace character (use this if you see ^? when you hit backspace in a text editor) -- stty erase ^?
+
+
+
+Git Commands
+Here is a simple list of useful commands when contributing with git:
+
+
+git pull origin gets updates from the central copy
+
+git checkout NAME-OF-BRANCH changes to an existing branch
+
+git checkout -b NAME-OF-BRANCH creates a new branch and changes to it
+
+git status shows all files that have been changed or added to be committed
+
+git add FILE OR FOLDER stages changes to be committed
+
+git commit -m "COMMENT TO DESCRIBE THE INTENTION OF THE COMMIT" makes the change official on your local copy
+
+git push origin NAME-OF-BRANCH updates the central copy
+
+git revert HEAD undoes the last commit on a branch
+
+git branch lists the branches you have on your local copy; there will be a star by the branch your are currently on
+
+git branch -d NAME-OF-BRANCH will delete a given branch
+
+git diff shows the difference between local, unstaged changes and the official (pulled or committed) version
+
+git checkout -- NAME-OF-FILE deletes changes to a given file that have not been staged to commit
+
+git checkout . deletes all local changes in the repository that have not been added to the staging area
+
+git clean -f deletes untracked changes
+
+git reset . removes files from staging area before they have been committed
+
+git reset --hard origin/master resets repo to mirror remote copy
