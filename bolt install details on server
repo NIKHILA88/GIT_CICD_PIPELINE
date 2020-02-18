@@ -1,0 +1,7 @@
+
+
+
+sudo yum install puppet-bolt
+/opt/puppetlabs/bolt/bin/bolt file upload /tmp/"$app"_deployer.tar.gz /tmp/fedex_dep.tar.gz --user eshwar_anne_fedex_com --private_key /home/eshwar_anne_fedex_com/.ssh/google_compute_engine --no-host-key-check --target gcp00106.itoa.fedex.com
+
+https://puppet.com/docs/bolt/latest/bolt_installing.html#install-bolt-on-nix
