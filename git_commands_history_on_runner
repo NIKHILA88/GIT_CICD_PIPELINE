@@ -1,0 +1,507 @@
+ 1  cd /etc/yum.repos.d/
+    2  ll
+    3  rm redhat.repo
+    4  ll
+    5  yum repolist
+    6  yum install puppet-agent
+    7  rpm -qa |grep vm-
+    8  cd /var/tmp
+    9  ll
+   10  mkdir /var/tmp/puppet
+   11  CLASS=resource::second_disk::rhel6::second_disk_management1_1   # modify this for your platform
+   12  puppet apply --modulepath=/var/tmp/modules --vardir=/var/tmp/puppet   -e "include $CLASS"
+   13  ll
+   14  ll puppet/
+   15  rmdir puppet/
+   16  mkdir -p /var/lib/puppet/state
+   17  puppet agent --test
+   18  yum update
+   19  yum clean all
+   20  rpm -q kernel
+   21  uname -r
+   22  ll
+   23  cd modules/fdx_platform/manifests/rhel7/
+   24  ll
+   25  head r20160901/bake_template.pp
+   26  puppet apply --modulepath=/var/tmp/modules --vardir=/var/tmp/puppet   -e 'include fdx_platform::rhel7::r20160901::bake_template'
+   27  cd /etc/rc3.d
+   28  ll
+   29  less S20firstboot-config
+   30  ll "/etc/rc3.d/S20firstboot-config"
+   31  cd
+   32  rm -rf /var/tmp/modules /var/tmp/puppet
+   33  /etc/cloud/te.mplate_version
+   34  /etc/cloud/template_version
+   35  cat /etc/cloud/template_version
+   36  cd /var/log
+   37  ll
+   38  >messages
+   39  cd
+   40  ll
+   41  \ls -al
+   42  init 0
+   43  ps -ef | grep start
+   44  ps -ef | grep puppet
+   45  less /var/log/messages
+   46  ps -ef | grep puppet
+   47  watch pstree -ap 20803
+   48  puppet agent --test
+   49  rpm -q kernel
+   50  uname -r
+   51  shutdown -r now
+   52  uname -r
+   53  rpm -q kernel
+   54  yum erase kernel-3.10.0-327.22.2.el7.x86_64
+   55  mkdir /var/tmp/puppet
+   56  ls /etc/sysconfig/network-scripts/
+   57  ls /var/lib/dhcp
+   58  ls /var/lib/dhclient/
+   59  puppet apply --modulepath=/var/tmp/modules --vardir=/var/tmp/puppet -e 'include fdx_platform::rhel7::r20170801::bake_template'
+   60  rm -rf /var/tmp/puppet /var/tmp/modules
+   61  cat /etc/cloud/template_version
+   62  shutdown -h now
+   63  cd /var/log
+   64  ls -l
+   65  less messages
+   66  ls -l
+   67  cd /etc/init.d/
+   68  ls -l first*
+   69  touch FOO
+   70  rm FOO
+   71  rm FOO
+   72  vim firstboot-network
+   73  ls /var/lib/dhclient
+   74  cd /var/log
+   75  ls -lrt
+   76  date
+   77  less boot.log
+   78  ls -lrt
+   79  last -10
+   80  ls -l /var/log/messages
+   81  cp /dev/null /var/log/messages
+   82  unalias cp
+   83  cp /dev/null /var/log/maillog
+   84  cp /dev/null /var/log/cron
+   85  cp /dev/null /var/log/secure
+   86  cp /dev/null /var/log/yum.log
+   87  ls -l /var/log
+   88  shutdown -h now
+   89  less /var/log/messages
+   90  ps -ef | grep puppet
+   91  less /var/log/messages
+   92  puppet agent --test --environment f_joel_412_osupdates_20180501
+   93  id jenkins
+   94  ls -ld /opt/jenkins
+   95  ls -lnd /opt/jenkins
+   96  id tibco
+   97  ls -lnd /opt/tibco
+   98  ls -lnd /home/tibco
+   99  grep jenkins /etc/passwd
+  100  df -h /var/fedex
+  101  vgdisplay vg01
+  102  lvextend --resizefs -L 8G /dev/mapper/vg01-varfedexvol
+  103  vgdisplay vg01
+  104  df -h
+  105  /usr/local/bin/patching/validateupgrade.sh
+  106  /usr/local/bin/patching/stageupgrade.sh
+  107  less /var/log/messages
+  108  ps -ef | grep puppet
+  109  vim /etc/puppetlabs/puppet/puppet.conf
+  110  /usr/local/bin/patching/validateupgrade.sh
+  111  date
+  112  /usr/local/bin/patching/validateupgrade.sh
+  113  /usr/local/bin/patching/stageupgrade.sh
+  114  less +F /var/log/messages
+  115  sudo puppet agent -t
+  116  /usr/local/bin/patching/validateupgrade.sh
+  117  /usr/local/bin/patching/upgradeReboot.sh
+  118  cd /var/log/patching
+  119  ls -la
+  120  less /usr/local/bin/patching/validateupgrade.sh
+  121  less /usr/local/bin/patching/rhelupgrade.conf
+  122  less /usr/local/bin/patching/validateupgrade.sh
+  123  less /usr/local/bin/patching/rhelupgrade.conf
+  124  pwd
+  125  cd ../
+  126  ls -l /usr/local/bin/patching
+  127  rpm -q kernel
+  128  uname -r
+  129  /usr/local/bin/patching/validateupgrade.sh
+  130  yum erase kernel-3.10.0-693.1.1.el7.x86_64
+  131  rpm -q kernel
+  132  mkdir /var/tmp/puppet
+  133  puppet apply --modulepath=/var/tmp/modules --vardir=/var/tmp/puppet -e 'include fdx_platform::rhel7::bake_template'
+  134  ls /var/tmp/modules
+  135  puppet apply --modulepath=/var/tmp/modules --vardir=/var/tmp/puppet -e 'include fdx_platform::rhel7::bake_template'
+  136  ls -l /var/log
+  137  ls -l /var/log/patching/
+  138  cat /etc/cloud/template_version
+  139  df -h
+  140  ls -l /boot
+  141  package-cleanup --oldkernels --count 1
+  142  ls -l /boot
+  143  puppet apply --modulepath=/var/tmp/modules --vardir=/var/tmp/puppet -e 'include fdx_platform::rhel7::bake_template'
+  144  cat /etc/cloud/template_version
+  145  shutdown -h now
+  146  less /var/log/messages
+  147  cat /etc/redhat-release
+  148  cat /etc/cloud/template_version
+  149  ls -l /etc/shadow
+  150  date
+  151  id jenkins
+  152  id tibco
+  153  puppet agent -t
+  154  /usr/local/bin/patching/validateupgrade.sh
+  155  rpm -q kernel
+  156  rpm -qi kernel
+  157  ls /var/tmp/modules/
+  158  mkdir /var/tmp/puppet
+  159  ls /var/tmp/puppet
+  160  rm -rf /var/tmp/puppet
+  161  less /var/tmp/modules/fdx_platform/files/common/bake_template/firstboot/firstboot-network.rhel7
+  162  mkdir /var/tmp/puppet
+  163  puppet apply --modulepath=/var/tmp/modules --vardir=/var/tmp/puppet -e 'include fdx_platform::rhel7::r20170801::bake_template'
+  164  less /etc/init.d/firstboot-network
+  165  cat /etc/cloud/template_version
+  166  rm -rf  /var/tmp/puppet /var/tmp/modules
+  167  shutdown -h now
+  168  ls -l /etc/rc?.d/*first*
+  169  /etc/init.d/firstboot-network.orig
+  170  ps -ef | grep puppet
+  171  puppet agent -t
+  172  find /var/lib/puppet/ssl/
+  173  mkdir /var/tmp/puppet
+  174  puppet apply --modulepath=/var/tmp/modules --vardir=/var/tmp/puppet -e 'include fdx_platform::rhel7::r20170801::bake_template'
+  175  ls -l /etc/rc?.d/*first*
+  176  ls -l /etc/init.d/*first*
+  177  ls -l /etc/init.d/*first*.orig
+  178  rm /etc/init.d/*first*.orig
+  179  ls -l /etc/init.d/*first*
+  180  ls -l /etc/sysconfig/network-scripts/
+  181  cat /etc/sysconfig/network-scripts/ifcfg-ens160
+  182  cat /etc/sysconfig/network
+  183  cat /etc/cloud/template_version
+  184  uname -r
+  185  rm -rf /var/tmp/modules /var/tmp/puppet/
+  186  ls -l /var/log
+  187  tail mes
+  188  tail /var/log/messages
+  189  cp /dev/null /var/log/messages
+  190  shutdown -h now
+  191  ps -ef
+  192  ps -ef |grep -i puppet
+  193  kill -9 13661 13684
+  194  ps -ef |grep -i puppet
+  195  grep puppet /var/log/messages
+  196  service puppet-agent -status
+  197  service puppet-agent status
+  198  service puppet status
+  199  service puppet start
+  200  service puppet status
+  201  tail -f /var/log/messages
+  202  puppet agent -t
+  203  ps -ef |grep -i puppet
+  204  puppet agent -t
+  205  grep puppet /var/log/messages
+  206  grep puppet /var/log/messages |less
+  207  ls -al /etc/passwd*
+  208  vimdiff /etc/passwd- /etc/passwd
+  209  /usr/local/bin/patching/validateupgrade.sh
+  210  /usr/local/bin/patching/stageupgrade.sh
+  211  /usr/local/bin/patching/validateupgrade.sh
+  212  /usr/local/bin/patching/upgradeReboot.sh
+  213  puppet agent -t
+  214  ifconfig -a
+  215  ps -ef
+  216  ls -al
+  217  ls -al /var/tmp/
+  218  ls -alrt /var/tmp
+  219  uname -a
+  220  ls -alrt /var/tmp
+  221  ls -alrt /var/tmp/modules/stdlib/
+  222  shutdown -h now
+  223  ls -al
+  224  ip addr
+  225  ip addr |grep BROADCAST
+  226  ls -al /var/tmp/modules/
+  227  rm -rf /var/tmp/modules/
+  228  ls -al /var/tmp/modules/
+  229  rm -rf /var/tmp/modules
+  230  ls -al /var/tmp/modules/
+  231  puppet apply --modulepath=/var/tmp/modules --vardir=/var/tmp/puppet -e 'include fdx_platform::rhel7::r20170801::bake_template'
+  232  grep -r -l r0016039 /*
+  233  nano -w /etc/hosts
+  234  nano -w /etc/hostname
+  235  ls -al /var/lib/dhclient/
+  236  cat
+  237  ip addr
+  238  ifconfig ${NIC} | grep netmask | awk '{print $2}'
+  239  NIC=`ip addr | grep BROADCAST | head -1 | awk '{print $2}' | sed 's/://'`
+  240  ifconfig ${NIC} | grep netmask | awk '{print $2}'
+  241  ls -al /etc/rc.d/
+  242  ls -al /etc/rc.d/rc3.d/
+  243  ls -al /etc/rc.d/rc3.d/S11firstboot-network
+  244  less /etc/rc.d/rc3.d/S11firstboot-network
+  245  grep -r -l r0016039 /*
+  246  ls -1 /
+  247  for i in `ls -1 |egrep -v 'proc|sys'`; do grep -r -l r0016039 /$i/*; done
+  248  for i in `ls -1 |egrep -v 'proc|sys|anaconda'`; do grep -r -l r0016039 /$i/*; done
+  249  for i in `ls -1 |egrep -v 'proc|sys|anaconda'`; do echo $i; done
+  250  for i in `ls -1 / |egrep -v 'proc|sys|anaconda'`; do grep -r -l r0016039 /$i/*; done
+  251  for i in `ls -1 / |egrep -v 'proc|sys|anaconda|dev'`; do grep -r -l r0016039 /$i/*; done
+  252  ls -al /etc/udev/rules.d/90-eno-fix.rules
+  253  cat /etc/udev/rules.d/90-eno-fix.rules
+  254  cat /etc/udev/rules.d/70-persistent-ipoib.rules
+  255  ip addr
+  256  for i in `ls -1 / |egrep -v 'proc|sys|anaconda|dev'`; do grep -r -l r0016039 /$i/*; done
+  257  rpm -qa |grep -i splunk
+  258  cat /opt/splunk/7.0.2/splunkforwarder/etc/system/local/inputs.conf
+  259  cat /opt/splunk/7.0.2/splunkforwarder/etc/system/local/server.conf
+  260  ls -al/opt/openv/logs/nbftclnt/
+  261  ls -al /opt/openv/logs/nbftclnt/
+  262  cat /opt/openv/logs/nbftclnt/51216-200-1969028874-190329-0000000000.log
+  263  nano /tmp/tmp.txt
+  264  sh /tmp/tmp.txt
+  265  for i in `ls -1 / |egrep -v 'proc|sys|anaconda|dev'`; do grep -r -l r0016039 /$i/*; done
+  266  ip addr
+  267  for i in `ls -1 / |egrep -v 'proc|sys|anaconda|dev'`; do grep -r -l '10.255.92.117' /$i/*; done
+  268  ip addr
+  269  for i in `ls -1 / |egrep -v 'proc|sys|anaconda|dev'`; do grep -r -l '00:50:56:80:6f:50' /$i/*; done
+  270  shutdown -h now
+  271  uname -a
+  272  uptime
+  273  ls -al /var/tmp/modules/
+  274  ls -al
+  275  date
+  276  ls -alrt
+  277  grep puppet /var/log/messages
+  278  cd /var/tmp/modules/
+  279  ls -al
+  280  cd ./fdx_platform/
+  281  ls -al
+  282  cd manifests/
+  283  ls -al
+  284  cd common/
+  285  ls -al
+  286  cd bake_template/
+  287  ls -al
+  288  ls -alrt
+  289  date
+  290  nano network.pp
+  291  pd
+  292  ls -a
+  293  pwd
+  294  ls -al
+  295  cd~/
+  296  cd ~/
+  297  rm -rf /var/tmp/puppet /var/tmp/modules
+  298  ls -al
+  299  ls -al /var/tmp/modules
+  300  cd /var/tmp/modules/fdx_platform/manifests/common/bake_template/
+  301  ls -al
+  302  ls -alrt
+  303  less network.pp
+  304  ls -al /var/tmp/puppet
+  305  mkdir /var/tmp/puppet
+  306  ls -al /var/tmp/puppet
+  307  puppet agent -t
+  308  /usr/local/bin/patching/validateupgrade.sh
+  309  nano -w /usr/local/bin/patching/rhelpatching.conf
+  310  grep patching /usr/local/bin/patching/rhelpatching.conf
+  311  nano -w /usr/local/bin/patching/rhelpatching.conf
+  312  grep -i disable /usr/local/bin/patching/rhelpatching.conf
+  313  nano -w /etc/hosts
+  314  ls -ld /var/log/secure
+  315  /usr/local/bin/patching/validateupgrade.sh
+  316  /usr/local/bin/patching/stageupgrade.sh
+  317  yum update
+  318  /usr/local/bin/patching/stageupgrade.sh
+  319  abrt-cli list --since 1565212054
+  320  puppet agent -t
+  321  /usr/local/bin/patching/validateupgrade.sh
+  322  /usr/local/bin/patching/stageupgrade.sh
+  323  /usr/local/bin/patching/validateupgrade.sh
+  324  /usr/local/bin/patching/upgradeReboot.sh
+  325  /usr/local/bin/patching/validateupgrade.sh
+  326  yum remove -y kernel-devel-2.6.32-754.11.1.el6.x86_64 kernel-2.6.32-754.11.1.el6.x86_64
+  327  rpm -qa |grep -i kernel
+  328  rpm -qa |grep -i kernel |grep 5.1
+  329  yum remove -y kernel-3.10.0-957.5.1.el7.x86_64
+  330  rpm -qa |grep -i kernel |grep 5.1
+  331  rpm -qa |grep -i kernel
+  332  ls -al /opt/fedex/
+  333  ls -al /var/fedex/
+  334  mkdir /var/tmp/puppet
+  335  ls -ld mkdir /var/tmp/puppet
+  336  ls -al /var/tmp/puppet
+  337  puppet agent -t
+  338  cd /var/tmp/modules
+  339  ls -al
+  340  pwd
+  341  grep -r "bake_template" * |grep -i rhel
+  342  cat /etc/redhat-release
+  343  grep -r "bake_template" * |grep -i rhel7
+  344  grep -r "bake_template" * |grep -i rhel7 |grep r20170301
+  345  cat /etc/redhat-release
+  346  puppet apply --modulepath=/var/tmp/modules --vardir=/var/tmp/puppet -e 'include fdx_platform::rhel7::r20170301::bake_template'
+  347  rm -rf /var/tmp/puppet /var/tmp/modules
+  348  cat /etc/cloud/template_version
+  349  shutdown -h now
+  350  passwd
+  351  sudo -u splunk /bin/bash
+  352  cd /user
+  353  cd /usr/local
+  354  ls -ltr
+  355  cd bin
+  356  ls -ltr
+  357  cp -r /tmp/gitlab-runner-12.5.0-1.x86_64.rpm .
+  358  ls -ltr
+  359  rpm -i gitlab-runner-12.5.0-1.x86_64.rpm
+  360  ls -ltr
+  361  gitlab-runner start
+  362  gitlab-runner register
+  363  cd /usr/lib
+  364  ls -ltr
+  365  cd gitlab-runner/
+  366  ls -ltr
+  367  cat gitlab-runner
+  368  ls -ltr
+  369  history
+  370  clear
+  371  ls -ltr
+  372  pwd
+  373  cd ..
+  374  cd
+  375  pwd
+  376  cd /user
+  377  cd /usr
+  378  ls
+  379  cd local
+  380  cd bin
+  381  ls -ltr
+  382  gitlab-runner register
+  383  gitlab-runner start
+  384  ls -ltr
+  385  cd /usr/lib
+  386  ls -ltr
+  387  cd gitlab-runner/
+  388  ls -ltr
+  389  cd ~
+  390  cd .ssh
+  391  ls -ltr
+  392  pwd
+  393  cd /usr/local/bin
+  394  ls -ltr
+  395  cd /usr/local
+  396  ls -ltr
+  397  cd ..
+  398  find /* -name gitlab
+  399  find /* -name gitlab-runner
+  400  cd /etc/gitlab-runner/
+  401  ls -ltr
+  402  cat config.toml
+  403  cat config.toml.lock
+  404  clear
+  405  vi config.toml
+  406  gitlab-runner stop
+  407  gitlab-runner start
+  408  sudo -u gitlab-runner /bin/bash
+  409  sudo -u splunk /bin/bash
+  410  vi config.toml
+  411  sudo -u splunk /bin/bash
+  412  cd /etc/gitlab-runner/
+  413  vi config.toml
+  414  gitlab-runner stop
+  415  gitlab-runner start
+  416  gitlab-runner stop
+  417  gitlab-runner start
+  418  pwd
+  419  vi config.toml
+  420  ls -l
+  421  rm config.toml
+  422  ls -l
+  423  rm -f config.toml
+  424  ls -l
+  425  gitlab-runner register
+  426  cat config.toml
+  427  gitlab-runner stop
+  428  gitlab-runner start
+  429  cat /home/splunk/.ssh/id_rsa.pub
+  430  pwd
+  431  cat config.toml
+  432  vi config.toml
+  433  gitlab-runner stop
+  434  gitlab-runner start
+  435  ls -l
+  436  rm -rf config.toml
+  437  ls -l
+  438  gitlab-runner register
+  439  cat config.toml
+  440  vi config.toml
+  441  cat config.toml
+  442  adduser 3703222
+  443  sudo -u splunk /bin/bash
+  444  sudo -u gitlab-runner /bin/bash
+  445  sudo -u splunk /bin/bash
+  446  sudo -u gitlab-runner cat /home/splunk/.ssh/id_rsa.pub
+  447  sudo -u splunk /bin/bash
+  448  find /* -name gitlab-runner
+  449  cd /etc/gitlab-runner/
+  450  ls -ltr
+  451  cat config.toml
+  452  cd /home/3703222/.ssh
+  453  rm config.toml
+  454  ls -ltr
+  455  sudo -u splunk /bin/bash
+  456  gitlab-runner stop
+  457  gitlab-runner start
+  458  gitlab-runner register
+  459  gitlab-runner stop
+  460  gitlab-runner start
+  461  sudo -u splunk /bin/bash
+  462  cd /tmp
+  463  ls -ltr
+  464  cd test_nikhila/
+  465  ls -ltr
+  466  cd test_nikhila/
+  467  ls -ltr
+  468  cd /tmp
+  469  ls -ltr
+  470  cd /opt
+  471  ls -ltr
+  472  cd /tmp
+  473  ls -ltr
+  474  find /* . | grep git
+  475  find /* . | grep git-runner
+  476  find /* . | grep git runner
+  477  find /* . | grep gitrunner
+  478  find /* . | grep git
+  479  gitlab-runner status
+  480  find /* . | grep gitlab-runner
+  481  cd /etc
+  482  ls -ltr
+  483  cd gitlab-runner/
+  484  ls -ltr
+  485  rm -rf config.toml
+  486  ls -ltr
+  487  gitlab-runner restart
+  488  gitlab-runner register
+  489  cd /home
+  490  cd f370322
+  491  useradd --comment 'f3703222' --create-home f3703222 --shell /bin/bash
+  492  cd f3703222/
+  493  ls -ltr
+  494  ssh keygen
+  495  sudo -u f3703222
+  496  paswd f3703222
+  497  passwd f3703222
+  498  sudo -u f3703222 /bin/bash
+  499  cd /etc/gitlab-runner/
+  500  ls -ltr
+  501  vi config.toml
+  502  gitlab-runner stop
+  503  gitlab-runner start
+  504  vi config.toml
+  505  gitlab-runner stop
+  506  gitlab-runner start
+  507  history
