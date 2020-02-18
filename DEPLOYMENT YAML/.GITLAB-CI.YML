@@ -1,0 +1,61 @@
+before_script: 
+    - echo "Before Script"
+    - hostname
+    - echo $app
+    - echo $new
+    - echo $path
+
+stages:
+    - test
+    - build
+    - deploy
+
+test:
+  stage: test
+  script: 
+    - echo "Running tests"
+    - pwd 
+    - hostname
+    - cd /opt/Repo/gcp-prod-deployment-repo/deployment-apps/
+    - ls -l | grep $app
+    - sudo -u splunk python /opt/Repo/gcp-prod-deployment-repo/umrf-onboarding-master-conf_validator/conf_validator/validate_confs.py "$path"_inputs/default/inputs.conf "$path"_props/default/props.conf > /tmp/validation.log
+    - if grep -q "ERROR" /tmp/confValidator.log; then
+    - echo "Found ERROR in $index Props, do not deploy" >> /tmp/confValidator.log
+    - cat /tmp/confValidator.log | mail eshwar.anne@fedex.com 
+    - exit 1
+    - fi
+    - echo "Error not found"
+
+build:
+  stage: build
+  script: 
+    - echo "Deploy to Building and scp'ing files to servers"
+    - whoami
+    - pwd
+    
+deploy_staging:
+  stage: deploy
+  script:
+    - cd /opt/Repo/gcp-prod-deployment-repo/
+    #- git pull batman master
+    - echo "Deploy to ClusterMaster and Deployer"
+    #- /home/eshwar_anne_fedex_com/pre_deployment_script.sh $app
+    - sudo -u splunk cp -r "$path"_props /tmp/
+    - sudo -u splunk ls -l /tmp/
+    - cd /tmp/
+    - sudo -u splunk tar -zcvf "$app"_cm.tar.gz "$app"_props
+    - sudo -u splunk chmod 777 /tmp/"$app"_cm.tar.gz 
+    - /opt/puppetlabs/bolt/bin/bolt file upload /tmp/"$app"_cm.tar.gz /tmp/fedex_cm.tar.gz --user eshwar_anne_fedex_com --private_key /home/eshwar_anne_fedex_com/.ssh/google_compute_engine --no-host-key-check --target gcp00105.itoa.fedex.com
+    - sudo -u splunk cp -r "$path"_props /tmp/$app/
+    - sudo -u splunk cp -r "$path"_search /tmp/$app/
+    - sudo -u splunk tar -zcvf "$app"_deployer.tar.gz /tmp/$app
+    - sudo -u splunk ls -l /tmp/
+    - /opt/puppetlabs/bolt/bin/bolt file upload /tmp/"$app"_deployer.tar.gz /tmp/fedex_dep.tar.gz --user eshwar_anne_fedex_com --private_key /home/eshwar_anne_fedex_com/.ssh/google_compute_engine --no-host-key-check --target gcp00106.itoa.fedex.com
+    - /opt/puppetlabs/bolt/bin/bolt command run sudo -u splunk /opt/splunk/dep_scripts/dep_dep_script.sh "$app" --user eshwar_anne_fedex_com --private_key /home/eshwar_anne_fedex_com/.ssh/google_compute_engine --no-host-key-check --target gcp00106.itoa.fedex.com
+    - /opt/puppetlabs/bolt/bin/bolt command run sudo -u splunk /opt/splunk/dep_scripts/cm_dep_script.sh "$app" --user eshwar_anne_fedex_com --private_key /home/eshwar_anne_fedex_com/.ssh/google_compute_engine --no-host-key-check --target gcp00106.itoa.fedex.com
+
+
+
+
+  only:
+  - master
