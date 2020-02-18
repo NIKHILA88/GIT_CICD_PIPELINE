@@ -1,0 +1,12 @@
+[splunk@gcp00105 dep_scripts]$ cat cm_dep_script.sh
+#!/bin/bash
+#this script complets final steps in the application deployment on GCP for the Cluster Master
+
+set -x
+
+cd /tmp/
+tar zxvf fedex_cm.tar.gz
+sudo -u splunk mv "$1"_props /opt/splunk/etc/master-apps/
+sudo -u splunk rm fedex_cm.tar.gz
+
+exit
