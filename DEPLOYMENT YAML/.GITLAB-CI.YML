@@ -51,8 +51,8 @@ deploy_staging:
     - sudo -u splunk tar -zcvf "$app"_deployer.tar.gz /tmp/$app
     - sudo -u splunk ls -l /tmp/
     - /opt/puppetlabs/bolt/bin/bolt file upload /tmp/"$app"_deployer.tar.gz /tmp/fedex_dep.tar.gz --user eshwar_anne_fedex_com --private_key /home/eshwar_anne_fedex_com/.ssh/google_compute_engine --no-host-key-check --target gcp00106.itoa.fedex.com
-    - /opt/puppetlabs/bolt/bin/bolt command run sudo -u splunk /opt/splunk/dep_scripts/dep_dep_script.sh "$app" --user eshwar_anne_fedex_com --private_key /home/eshwar_anne_fedex_com/.ssh/google_compute_engine --no-host-key-check --target gcp00106.itoa.fedex.com
-    - /opt/puppetlabs/bolt/bin/bolt command run sudo -u splunk /opt/splunk/dep_scripts/cm_dep_script.sh "$app" --user eshwar_anne_fedex_com --private_key /home/eshwar_anne_fedex_com/.ssh/google_compute_engine --no-host-key-check --target gcp00106.itoa.fedex.com
+    - /opt/puppetlabs/bolt/bin/bolt command run "sudo -u splunk /opt/splunk/dep_scripts/dep_dep_script.sh \"$app\"" --user eshwar_anne_fedex_com --private_key /home/eshwar_anne_fedex_com/.ssh/google_compute_engine --no-host-key-check --target gcp00106.itoa.fedex.com
+    - /opt/puppetlabs/bolt/bin/bolt command run "sudo -u splunk /opt/splunk/dep_scripts/cm_dep_script.sh \"$app\"" --user eshwar_anne_fedex_com --private_key /home/eshwar_anne_fedex_com/.ssh/google_compute_engine --no-host-key-check --target gcp00106.itoa.fedex.com
 
 
 
