@@ -1,0 +1,10 @@
+# Ignore everything
+/*
+/*/
+
+# But not these files and directories...
+!.gitignore
+!/apps
+!apps/*
+!deployment-apps
+!deployment-apps/*
