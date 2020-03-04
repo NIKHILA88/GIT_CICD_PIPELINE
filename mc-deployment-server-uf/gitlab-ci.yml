@@ -1,0 +1,49 @@
+before_script: 
+    - echo "Before Script"
+    - hostname
+    - echo $index
+    - echo $path
+    - echo $new
+
+stages:
+    - test
+    - build
+    - deploy
+
+test:
+  stage: test
+  script: 
+    - echo "Running tests"
+    - pwd
+
+build:
+  stage: build
+  script: 
+    - echo "Deploy to Deployment server"
+    - pwd
+
+deploy_staging:
+  stage: deploy
+  script:
+    - sudo -u splunk /opt/splunk/gitpull.sh
+    - whoami
+    - sudo -u splunk git clone git@gitlab.prod.fedex.com:APP3530768/test-deployment-server.git /opt/splunk/gitRepo/test-deployment-server/
+    - sudo -u splunk cp -r /opt/splunk/gitRepo/test-deployment-server/deployment-apps/"$index"_inputs /opt/splunk/current/etc/deployment-apps/
+    - sudo -u splunk cp -r /opt/splunk/gitRepo/test-deployment-server/deployment-apps/"$index"_props /opt/splunk/current/etc/deployment-apps/
+    - sudo -u splunk rm -rf /opt/splunk/gitRepo/test-deployment-server
+    - sudo -u splunk git clone git@gitlab.prod.fedex.com:APP3530768/test-search-head.git /opt/splunk/gitRepo/test-search-head/
+    - sudo -u splunk cp -r /opt/splunk/gitRepo/test-search-head/apps/"$index"_search /opt/splunk/current/etc/deployment-apps/
+    - sudo -u splunk rm -rf /opt/splunk/gitRepo/test-search-head
+    - if [ $new = "yes" ] ; then
+    - echo "Deploying new app"
+    - pwd
+    - sudo -u splunk /opt/splunk/OnpremNewDeployment.sh "$index"
+    - echo "New app Deployed "
+    - fi
+    - echo "Re-deploying Rest of the apps"
+    - exit 0
+
+
+  only:
+  - master
+
