@@ -1,0 +1,87 @@
+ def test_sourcetype_exists(self):
+    error_list = []
+    for env, env_data in self.resolved_instances["profile::feed::requirements"].items():
+      for region, region_data in env_data.items():
+        for instance, instance_data in region_data.items():
+          for feed, feed_data in instance_data.items():
+            if not feed_data.setdefault("deploy", False): continue
+            if "data_sources" in feed_data:
+              for source,source_data in feed_data["data_sources"].items():
+                exceptions_key = "profile::feed::requirements/{}/{}".format(feed, source)
+                if exceptions_key in self.exceptions and 'test_sourcetype_exists' in self.exceptions[exceptions_key]: continue
+                if "data_source_type" in source_data and source_data["data_source_type"] in ["hec", "db_input", "win_event_log"]: continue
+                if "sourcetype" in source_data:
+                  if source_data["sourcetype"] not in self.resolved_instances["profile::feed::parsing_rules"][env][region][instance]['props']:
+                    message = "Data source '{}' in feed '{}' in '{}/{}/{}' - The data source uses sourcetype '{}' but isn't defined under profile::feed::parsing_rules".format(source, feed, env, region, instance, source_data["sourcetype"])
+                    error_list.append(message)
+                  elif not self.resolved_instances["profile::feed::parsing_rules"][env][region][instance]['props'][source_data["sourcetype"]].setdefault("deploy", False):
+                    message = "Data source '{}' in feed '{}' in '{}/{}/{}' - The data source uses sourcetype '{}' but doesn't have 'deploy: true' set under profile::feed::parsing_rules".format(source, feed, env, region, instance, source_data["sourcetype"])
+                    error_list.append(message)
+
+    error_list.sort()
+    self.assertIs(len(error_list) == 0,True,"\n{}".format("\n".join(error_list)))
+    
+    
+    
+  def test_datetime_xml_exists(self):
+    error_list=[]
+    for env, env_data in self.resolved_instances["profile::feed::parsing_rules"].items():
+      for region, region_data in env_data.items():
+        for instance, instance_data in region_data.items():
+          for sourcetype, sourcetype_data in instance_data['props'].items():
+            if not sourcetype_data.setdefault("deploy", False): continue
+            exceptions_key = "profile::feed::parsing_rules/props/{}".format(sourcetype)
+            if exceptions_key in self.exceptions and 'test_datetime_xml_exists' in self.exceptions[exceptions_key]: continue
+
+            if "DATETIME_CONFIG" in sourcetype_data:
+              if sourcetype_data["DATETIME_CONFIG"] in ["NONE", "CURRENT"]: continue
+
+              datetime_xml_path = "modules/splunk_content/files/feed/datetime/{}.xml".format(sourcetype)
+              expected_value = "/etc/slave-apps/ubs_datetime_xml/{}.xml".format(sourcetype)
+
+              if sourcetype_data["DATETIME_CONFIG"] != expected_value:
+                message = "Sourcetype '{}' in '{}/{}/{}' - The sourcetype has DATETIME_CONFIG set to '{}' but the value '{}' was expected".format(sourcetype, env, region, instance, sourcetype_data["DATETIME_CONFIG"], expected_value)
+                error_list.append(message)
+
+              if not os.path.exists("{}/{}".format(self.base_dir, datetime_xml_path)):
+                message = "Sourcetype '{}' in '{}/{}/{}' - The sourcetype has DATETIME_CONFIG set but '{}' doesn't exist".format(sourcetype, env, region, instance, datetime_xml_path)
+                error_list.append(message)
+
+    error_list.sort()
+    self.assertIs(len(error_list) == 0,True,"\n{}".format("\n".join(error_list)))
+    
+   
+   
+   profile::feed::requirements:
+  aix:
+    metadata:
+      author: Splunk PS
+      os: unix
+    auto_whitelisting:
+      aix:
+        enabled: true
+    data_sources:
+      audit_stream:
+        data_source_type: monitor
+        data_store: aix-sec
+        path: /audit/stream.out
+        sourcetype: audit_stream
+      syslog_crit:
+        data_source_type: monitor
+        data_store: aix-sec
+        path: /var/adm/syslog.crit*
+        sourcetype: syslog_crit
+      syslog_info:
+        data_source_type: monitor
+        data_store: aix-sec
+        path: /var/adm/syslog.info*
+        sourcetype: syslog_info
+        
+  <data_source_id>:
+  data_source_type: script
+  disabled: <disabled>
+  script_path :  {in this case test should stop and no need to run, if its not there then i should look for script_name and validate weather it is there in beloiw location or not}
+  script_name: <script_name>   { Name of your script The script itself must be placed in modules/profile\files/Scripted_Inputs}
+  sourcetype: <sourcetype>
+  data_store: <data_store_id>
+  interval: <interval>
